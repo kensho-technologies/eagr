@@ -1,0 +1,13 @@
+// Copyright 2020-present Kensho Technologies, LLC.
+syntax = "proto3";
+package eagr;
+import "google/protobuf/wrappers.proto";
+
+
+// Simple service to test the interceptors
+service TestService {
+    rpc UnaryUnary(google.protobuf.StringValue) returns (google.protobuf.StringValue) {};
+    rpc UnaryStream(google.protobuf.StringValue) returns (stream google.protobuf.StringValue) {};
+    rpc StreamUnary(stream google.protobuf.StringValue) returns (google.protobuf.StringValue) {};
+    rpc StreamStream(stream google.protobuf.StringValue) returns (stream google.protobuf.StringValue) {};
+}
