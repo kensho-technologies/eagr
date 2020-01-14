@@ -1,0 +1,30 @@
+language: python
+install:
+- pip install poetry
+- poetry install
+
+jobs:
+  include:
+    - name: "pytest"
+      python: 3.6
+      env:
+        - TEST_CMD="poetry run python -m pytest ."
+    - name: "black"
+      python: 3.6
+      env:
+        - TEST_CMD="poetry run black --check --config pyproject.toml ."
+    - name: "mypy"
+      python: 3.6
+      env:
+        - TEST_CMD="poetry run mypy --config-file setup.cfg ."
+    - name: "flake8"
+      python: 3.6
+      env:
+        - TEST_CMD="poetry run flake8 --config --settings-path setup.cfg ."
+    - name: "isort"
+      python: 3.6
+      env:
+        - TEST_CMD="poetry run isort --check --settings-path setup.cfg ."
+
+script:
+    - "$(TEST_CMD)"
