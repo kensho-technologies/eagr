@@ -9,18 +9,14 @@ matrix:
       python: 3.6
       script:
         - poetry run black --check --config pyproject.toml .
-    - name: "mypy"
-      python: 3.6
-      script:
-        - poetry run mypy --config-file setup.cfg .
     - name: "flake8"
       python: 3.6
       script:
-        - poetry run flake8 --config --settings-path setup.cfg .
+        - poetry run flake8 --config setup.cfg .
     - name: "isort"
       python: 3.6
       script:
-        - poetry run isort --check --settings-path setup.cfg .
+        - poetry run isort --check --settings-path setup.cfg -rc .
     - name: "pytest"
       python: 3.6
       script:
