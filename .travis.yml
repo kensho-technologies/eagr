@@ -5,19 +5,14 @@ install:
 
 matrix:
   include:
-    - name: "black"
+    - name: "Lint, Static Code Analysis"
       python: 3.6
       script:
         - poetry run black --check --config pyproject.toml .
-    - name: "flake8"
-      python: 3.6
-      script:
-        - poetry run flake8 --config setup.cfg .
-    - name: "isort"
-      python: 3.6
-      script:
+        - poetry run flake8 --config setup.cfg . d
         - poetry run isort --check --settings-path setup.cfg -rc .
-    - name: "pytest"
+        - poetry run ./scripts/copyright_line_check.sh
+    - name: "Unit Tests"
       python: 3.6
       script:
         - poetry run python -m pytest .
