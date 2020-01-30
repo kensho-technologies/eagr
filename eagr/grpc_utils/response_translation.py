@@ -1,4 +1,6 @@
 # Copyright 2020-present Kensho Technologies, LLC.
+from typing import Any, Dict
+
 from google.protobuf import json_format
 
 

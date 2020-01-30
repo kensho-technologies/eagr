@@ -1,0 +1,18 @@
+language: python
+install:
+- pip install poetry
+- poetry install
+
+matrix:
+  include:
+    - name: "Lint, Static Code Analysis"
+      python: 3.6
+      script:
+        - poetry run black --check --config pyproject.toml .
+        - poetry run flake8 --config setup.cfg . d
+        - poetry run isort --check --settings-path setup.cfg -rc .
+        - poetry run ./scripts/copyright_line_check.sh
+    - name: "Unit Tests"
+      python: 3.6
+      script:
+        - poetry run python -m pytest .
