@@ -55,7 +55,7 @@ client = make_grpc_client(
 
 ## REST Passthrough
 
-[Functionality to bind unary grpc methods to Flask handlers](flask_bridge/Readme.md)
+[Functionality to bind unary grpc methods to Flask handlers](eagr/flask_bridge/Readme.md)
 
 
 ## Unittest Server
