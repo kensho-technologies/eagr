@@ -1,6 +1,12 @@
 # Eagr
 
+<a href="https://travis-ci.com/kensho-technologies/eagr"><img alt="Build Status" src="https://travis-ci.com/kensho-technologies/eagr.svg?branch=master"></a>
+<a href="https://opensource.org/licenses/Apache-2.0"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue"></a>
+<a href="https://pypi.org/project/eagr/"><img alt="PyPI" src="https://img.shields.io/pypi/v/eagr"></a>
+
 Easy and Abstracted gRPC. A collection of utilities for making GRPC easier to use in python. This package is widely used within Kensho.
+
+`pip install eagr`
 
 ## Server
 
