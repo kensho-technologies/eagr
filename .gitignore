@@ -127,7 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# poetry lock, since this is a package and we want it to be less restrictive than
-# if this was a project
-poetry.lock
