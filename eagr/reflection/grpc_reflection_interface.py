@@ -13,7 +13,7 @@ MAX_RETRIES = 3
 
 
 def _make_json_to_json_method_invocation(
-    self, method: Callable, proto_type: Callable, max_retries: int
+    method: Callable, proto_type: Callable, max_retries: int
 ) -> Callable:
     """Make function wrapping grpc method into json conversion"""
     # This invocation definition serves as a lambda for a GRPC method invocation
@@ -29,23 +29,23 @@ def _make_json_to_json_method_invocation(
     return invocation
 
 
-def make_json_grpc_client(self, host: str, service_name: str) -> Dict[str, Callable]:
+def make_json_grpc_client(host: str, service_name: str) -> Dict[str, Callable]:
     """Mount all GRPC methods for service onto client."""
     client = {}  # map method names to method invocations
-    self._channel = grpc.insecure_channel(host, (("grpc.lb_policy_name", "round_robin"),))
+    channel = grpc.insecure_channel(host, (("grpc.lb_policy_name", "round_robin"),))
     build_database_from_channel = reflection_descriptor_database.build_database_from_channel
-    descriptor_pool_instance, symbol_database_instance = build_database_from_channel(self._channel)
+    descriptor_pool_instance, symbol_database_instance = build_database_from_channel(channel)
 
     service_descriptor = descriptor_pool_instance.FindServiceByName(service_name)
 
     for method_descriptor in service_descriptor.methods:
         method_name = method_descriptor.name
         method_callable = method.make_grpc_unary_method(
-            self._channel, service_name, method_descriptor, symbol_database_instance
+            channel, service_name, method_descriptor, symbol_database_instance
         )
         input_type = method_descriptor.input_type
         input_prototype = symbol_database_instance.GetPrototype(input_type)
-        method_invocation = self._make_json_to_json_method_invocation(
+        method_invocation = _make_json_to_json_method_invocation(
             method_callable, input_prototype, max_retries=MAX_RETRIES
         )
 
