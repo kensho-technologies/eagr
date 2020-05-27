@@ -1,9 +1,10 @@
 # Copyright 2020-present Kensho Technologies, LLC.
 import unittest
-from unittest.mock import call, create_autospec, MagicMock, patch
+from unittest.mock import MagicMock, patch
 
-from eagr.reflection import reflection_descriptor_database, grpc_reflection_interface
+from eagr.reflection import grpc_reflection_interface, reflection_descriptor_database
 from eagr.tests.reflection import utils
+
 
 # Mocks to patch out context-specific method calls in eagr.reflection.grpc_reflection_interface
 def build_database_from_channel_mock(channel):
