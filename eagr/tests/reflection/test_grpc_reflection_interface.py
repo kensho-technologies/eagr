@@ -1,9 +1,12 @@
 # Copyright 2020-present Kensho Technologies, LLC.
+import collections
 import unittest
 from unittest.mock import MagicMock, patch
 
-from eagr.reflection import grpc_reflection_interface, reflection_descriptor_database
-from eagr.tests.reflection import utils
+from google.protobuf.util import json_format_proto3_pb2
+
+from ...reflection import grpc_reflection_interface, reflection_descriptor_database
+from ...tests.reflection import utils
 
 
 # Mocks to patch out context-specific method calls in eagr.reflection.grpc_reflection_interface
@@ -48,7 +51,54 @@ def get_prototype_mock(input_type):
     return callable_mock
 
 
+class ContextMock:
+    def __init__(self, metadata):
+        metadatum_tuple = collections.namedtuple("_Metadatum", ("key", "value"))
+        self._metadata = map(metadatum_tuple._make, metadata)
+
+    def invocation_metadata(self):
+        return self._metadata
+
+
+def method_to_callable_mock(grpc_method):
+    def transformed_invocation(
+        input_message,
+        timeout=None,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=None,
+        compression=None,
+    ):
+        return grpc_method(input_message, ContextMock(metadata))
+
+    return transformed_invocation
+
+
 class TestGRPCReflectionInterface(unittest.TestCase):
+    def test__make_json_to_json_method_invocation(self):
+        expected_input = 481516
+
+        # Derived from google.protobuf's test cases
+        test_input_dict = {"int32Value": expected_input}
+        test_message = json_format_proto3_pb2.TestMessage
+
+        def get_input_and_metadata(request, context):
+            metadata_first = next(context.invocation_metadata())
+            return test_message(
+                string_value="int32_value: {}, metadata {}: {}".format(
+                    request.int32_value, metadata_first.key, metadata_first.value
+                )
+            )
+
+        json_method_invocation = grpc_reflection_interface._make_json_to_json_method_invocation(
+            method_to_callable_mock(get_input_and_metadata), test_message, 3
+        )
+
+        self.assertEqual(
+            json_method_invocation(test_input_dict, metadata=(("hi", "there"),))["stringValue"],
+            "int32_value: 481516, metadata hi: there",
+        )
+
     @patch("eagr.reflection.reflection_descriptor_database.SymbolDatabase", autospec=True)
     @patch("eagr.grpc_utils.method.make_grpc_unary_method", autospec=True)
     @patch("eagr.reflection.reflection_descriptor_database.DescriptorPool", autospec=True)

@@ -1,5 +1,5 @@
 # Copyright 2020-present Kensho Technologies, LLC.
-from typing import Callable, Dict
+from typing import Callable, Dict, Optional, Tuple
 
 import backoff
 from google.protobuf import json_format
@@ -13,16 +13,25 @@ MAX_RETRIES = 3
 
 
 def _make_json_to_json_method_invocation(
-    method: Callable, proto_type: Callable, max_retries: int
+    method_callable: Callable, proto_type: Callable, max_retries: int
 ) -> Callable:
     """Make function wrapping grpc method into json conversion"""
     # This invocation definition serves as a lambda for a GRPC method invocation
     @backoff.on_exception(backoff.expo, (grpc.RpcError,), max_retries)
-    def invocation(input_dict: Dict) -> Dict:
+    def invocation(
+        input_dict: Dict,
+        timeout: Optional[int] = None,
+        metadata: Optional[Tuple] = None,
+        credentials: Optional[grpc.CallCredentials] = None,
+        wait_for_ready: Optional[bool] = None,
+        compression: Optional[int] = None,
+    ) -> Dict:
         """Convert input into protobuf, invoke grpc and convert response back to json"""
         input_message = proto_type()
         json_format.ParseDict(input_dict, input_message)
-        response_as_message = method(input_message)
+        response_as_message = method_callable(
+            input_message, timeout=timeout, metadata=metadata, credentials=credentials
+        )
         response_as_dict = response_translation.translate_message_to_dict(response_as_message)
         return response_as_dict
 
