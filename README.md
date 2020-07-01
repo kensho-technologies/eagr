@@ -96,7 +96,7 @@ class TestMyClient(unittest.TestClient):
 
 ## GRPC Reflection Interface
 
-Functionality to create a generic GRPC client based on a GRPC server that has reflection enabled
+Functionality to create a generic GRPC client based on a GRPC server that has reflection enabled.
 
 ### Sample usage:
 
@@ -113,6 +113,8 @@ generic_myservice_client = grpc_reflection_interface.make_json_grpc_client(host,
 
 my_grpc_response = generic_myservice_client["my_grpc_method"](params)
 ```
+
+Note: This currently only works for unary-unary method types. Adding functionality for stream methods is being looked into and is in the pipeline for future development.
 
 
 # License
