@@ -6,8 +6,8 @@ from google.protobuf import descriptor_pool, json_format, symbol_database
 
 # Fetch a selected set of primitive types for which the protodict clean up involves
 # a flattening of the namespace.
-from eagr.flask_bridge.response_translation import translate_message_to_dict
 from eagr.grpc_utils.method import make_grpc_unary_method
+from eagr.grpc_utils.response_translation import translate_message_to_dict
 from eagr.reflection.reflection_descriptor_database import build_database_from_channel
 
 

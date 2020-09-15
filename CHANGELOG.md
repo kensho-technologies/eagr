@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### Unreleased
+
+* Fix broken import bug with Flask Bridge
+
 ### v0.2.0
 
 * Method invocations returned for the GRPC Reflection Interface now accept parameters for `timeout`, `metadata`, `credentials`, `wait_for_ready`, and `compression`, matching the full contract for `UnaryUnaryMultiCallable` objects.
