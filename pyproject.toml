@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "eagr"
-version = "0.2.0"
+version = "0.2.1"
 description = "A collection of utilities for making GRPC easier to use in python."
 authors = ["Louis Ades <louis.ades@kensho.com>"]
 

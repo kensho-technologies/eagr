@@ -3,6 +3,10 @@ Changelog
 
 ### Unreleased
 
+* N/A
+
+### v0.2.1
+
 * Fix broken import bug with Flask Bridge
 
 ### v0.2.0
