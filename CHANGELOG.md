@@ -7,6 +7,10 @@ Changelog
 
 ### v0.2.1
 
+* Update Poetry dependencies. Unpin Flask, bump Pytest, cap Protobuf because of broken dependencies within 3.14.0
+
+### v0.2.1
+
 * Fix broken import bug with Flask Bridge
 
 ### v0.2.0
