@@ -9,7 +9,7 @@ matrix:
       python: 3.6
       script:
         - poetry run black --check --config pyproject.toml .
-        - poetry run flake8 --config setup.cfg . d
+        - poetry run flake8 --config setup.cfg .
         - poetry run isort --check --settings-path setup.cfg -rc .
         - poetry run ./scripts/copyright_line_check.sh
     - name: "Unit Tests"

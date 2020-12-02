@@ -7,20 +7,20 @@ authors = ["Louis Ades <louis.ades@kensho.com>"]
 [tool.poetry.dependencies]
 python = "^3.6"
 backoff = "^1.6.0"
-Flask = "^0.12.2"
+Flask = ">=0.12.2"
 grpcio-opentracing = "^1.1"
 funcy = "^1.7.2"
 grpcio-reflection = "^1.25"
 grpcio-tools = "^1.25"
 grpcio = "^1.25"
 prometheus_client = "^0.7.1"
-protobuf = "^3.6.0"
+protobuf = ">=3.6.0, <3.14.0"
 pytz = "^2019.3"
 opentracing_instrumentation = "^3.2"
 opentracing = "^2.2"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^6.1"
 black = "19.10b0"
 flake8 = "^3.7"
 isort = "^4.3"
